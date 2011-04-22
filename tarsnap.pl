@@ -5,8 +5,9 @@
 use strict;
 use warnings;
 
-my $today = `date +"%Y-%m-%d"`;
-chomp $today;
+my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+
+my $today = sprintf('%04s-%02s-%02s', $year+1900, $mon+1, $mday);
 
 print "Starting backup for $today\n===========\n";
 
@@ -14,11 +15,11 @@ print "Starting backup for $today\n===========\n";
 # Backups will be stored in format "$archive-$date"
 my %backups  = (
     'projects' => {
-        'dir' => '/home/nolan/projects',
+        'dir' => join('/', $ENV{HOME}, 'projects'),
         'num' => 3,
     },
     'images' => {
-        'dir' => '/home/nolan/images',
+        'dir' => join('/', $ENV{HOME}, 'images')',
         'num' => 3,
     }
 );
